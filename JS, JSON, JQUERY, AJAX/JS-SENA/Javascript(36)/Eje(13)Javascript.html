@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eje(13)Javascript</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var name;
+		var cantp;
+		var pa;
+		name=prompt('Ingrese el Nombre del postulante: ');
+		cantp=prompt('Ingrese el numero de preguntas a responder: ');
+		pa=prompt('Ingrese el numero de respuestas correctas: ');
+		var por=(parseInt(pa)*100)/parseInt(cantp);
+		if (por>=90) {
+			document.write(name);
+			document.write('<br>');
+			document.write('Nivel superior');
+		}
+		else if (por>90 && por<90) {
+			document.write(name);
+			document.write('<br>');
+			document.write('Nivel medio');
+		}
+		else if (por>=50 && por<75) {
+			document.write(name);
+			document.write('<br>');
+			document.write('Nivel regular');
+		}
+		else if (por<50) {
+			document.write(name);
+			document.write('<br>');
+			document.write('Fuera de Nivel');
+		}
+
+		
+
+	</script>
+</body>
+</html>

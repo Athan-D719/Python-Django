@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    <script type="text/javascript">
+    ind = 1;
+    function nuevo(){
+        var div = document.getElementById("parrafos");
+        var parrafo = document.createElement("p"); // <p></p>
+        var cont = document.createTextNode("Parrafo " + ind); // "Parrafo " + ind
+        parrafo.appendChild(cont); // <p>"Parrafo " + ind</p>
+        div.appendChild(parrafo); // <div><p>"Parrafo " + ind</p></div>
+        ind++;
+
+    }
+    </script>
+</head>
+<body>
+    <a href="#" onclick="nuevo()">Nuevo Parrafo</a>
+    <div id="parrafos">
+        <p>Parrafo inicial</p>
+    </div>
+
+</body>
+</html>

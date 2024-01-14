@@ -1,0 +1,219 @@
+console.log("First log"); 
+#so it would appear in the Debugger Console
+#Debug print, doesn't stop anything.
+#Just little pieces of code to be reviewed
+#Know where the error is
+
+
+JS Comments:
+	// comment
+	/**/ comment section
+
+@statements end with ; and spaces doesn't matter
+
+JS Variable names may vary, not suppouse to start with a number, and starting with a $ is considered tacky.
+
+/////////////////////////////////////////////////////
+>>x = 1.666666666667;
+>>x = Math.trunc(x);
+1  //it would just leave the number befor the point
+/////////////////////////////////////////////////////
+JS Operators:
+j = 10; =
+j += 10;+
+j -= 10;-
+j *= 10;*
+j /= 10;/
+j = 45 % 7; //reminder = 3
+j++; // +1
+--j; // -1
+
+JS Comparisons:
+j = 10; //10
+j == 10; //  true
+j !== 10;
+j < 10;
+j > 10;
+j <= 10;
+j >= 10;
+j = false;
+j == 0; //false == 0
+j === 0; // comparison with type (false != 0)
+j !== false;
+j !== true;
+
+JS Logical Operators:
+&& //and
+|| //or
+k > 10; //false
+! (k > 10) //true
+
+JS String Concatenation:
+//converts things to string
+y = 'Hello' +10+ 'people'
+"Hello 10 people"
+/////////////////////////////////////////////////
+Variable Typing
+x = "123" + 10; //"12310"
+x = ("123" * 1) + 10; //133
+x = ("freed" * 1) + 10; //NaN
+x = x + 1; //Nan
+
+Function:
+isNan(variable/operation)
+isInfinite(variable/operation)
+////////////////////////////////////////////////
+TYPE:
+typeof object(x) // "number", "string"...
+######################################################
+JS FUNCTIONS:
+
+gl = 123; //GLOBAL variable
+function check() {
+   var gl = 456; //not a global variable, LOCAL
+}
+check();
+console.log("GL = "+gl); //123
+
+###################################################
+JS Arrays:
+a = ["x","y"];
+a[0]; //"x"
+b = {"name":"chuck", "class":"dong"};
+b['name']; //"chuck"
+LINEAR ARRAY:
+arr = Array(); //[]
+arr.push('f'); //['f'] .append()
+###################################################
+JS Object Oriented Concepts:
++Class: a template-Dog
++Method or Message: A defined capability of a class- bark()
++Attribute: A defined data item in a clas-color
++Object or Instance: Particular class instance - Lassie
+
+Objects in JS:
+The function keyword returns a value which is a function itself - it makes a function!.
+#First-Class function: A first function will accept another function as argument and return a value from the two.
+####################################################
+JS Object Oriented Classes
+
+data.stuff = "hello"; data['stuff'] = "hello";
+#accomplish the same thing
+
+#######################################################
+#######################################################
+#######################################################
+JQuery(2006) Document Object Model(DOM):
+#data structure that lives in a sense, one pixel behind
+the screen.
+JS----------------------------------------------------
++getElementById() //bypass DOM structure
+
+console.dir(document.getElementById('person'));
+// it will appear in the console the object with the attributes and tags....etc
+
+onclick="document.getElementById('stuff').innerHTML='FORTH';return false;">Forth</a>
+//Changes the text from de innetHTML from the id
+to FORTH and returns a false after it has been clicked.
+//the return false manages what the js wants and not
+the anchor tag itself so to not redirect.
+
+var x = document.createElement('li');
+//creates an li tag element in the var x
+
+x.className = "list-item";
+//being an element x will have a specified class(list-item)
+
+x.innerHTML = "The counter is "+counter;
+//Overwrite the innerHTML
+
+
+document.getElementById('the-list').appendChild(x);
+//appends to the right/down the x object
+-----------------------------------------------------
+JQuery solve the problem to make DOM portable
+works better with DOM
+
++elegant way to select DOM elements
++clean way of register events
+
+DOCUMENTATION
+http://docs.jquery.com/Main_Page
+http://api.jquery.com/
+http://jquerty.com/demos/
+
+<script type="text/javascript" src="jquery.min.js">
+-First include jquerty lib.
+-Can be either load in the head or bottom body
+-understand that variables and fun can start with $(JS)
+#remember php:
+-----------------------------------------------------
+...
+"<script>location.href='http://localhost:8081/proyecto/frmactualizar_usu.php?codigo=" . $code . "&nombres=" . $nombres ."&apellidos=
+		//" . $apellidos . "&email=" . $email . "&telefono=" . $telefono . "&apto=" . $apto ."  
+		//&recibido=". $recibidos ."</script>";
+	}
+
+
+	$conn = null;
+} 
+...
+-----------------------------------------------------
+JQuerty ($)
+<script type="text/javascript">
+$(document).ready(function(){ //ready = onload(JS)//(function..), document=DOM, $declares the variable//(DOM) in this case or function
+  alert("Hello JQuery World!"); 
+  console.log('Hello JQuery..');
+});
+</script>
+#######################################################
+#######################################################
+#######################################################
+AJAX/JSON
++will comunicate with routing and views while we are
+in the DOM with the advantage of uploading data without
+having to see it
+
++The idea was to let JS do it's own response cycles
+sending XML back and forth and it changed to JSON
+
++Agreeing on a "Wire format" or XML-JSON contract:
+	-PHP Array
+	-Python Dictionary
+	-JS Object
+	-J HashMap
+#Wire Protocol: a.k.a What we send on a the "wire"
+JSON is a "Wire Format" 
+Python dictionary=>Serialize=JSON=>DeSerialize(JS Object)(DECODING)
+
+data = '''
+[  
+  { "id" : "001",  
+    "x" : "2",
+    "name" : "Chuck"
+  } ,
+  { "id" : "009",  
+    "x" : "7",
+    "name" : "Brent"
+  },
+  "email" : {
+     "hide" : "yes"
+   }
+]'''
+
+Python: (json.loads(data))[0][id]
+JS: data.email.hide
+
+#view source on WebPage lets tou see it before something like a JSON Response happens
+
+
+
+
+
+
+
+
+
+
+
+

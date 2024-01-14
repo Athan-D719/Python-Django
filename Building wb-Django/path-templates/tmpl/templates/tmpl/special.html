@@ -1,0 +1,10 @@
+<html>
+<head>
+    <title>Special characters</title>
+</head>
+<body>
+    <p>Your guess was {{ zap }}</p> <!--42-->
+    <p>Escaped {{ txt }}</p>   <!--<b>bold</b>-->
+    <p>Escaped not! {{ txt|safe }}</p> <!--bold    #in the actual HTML-->
+</body>
+</html>

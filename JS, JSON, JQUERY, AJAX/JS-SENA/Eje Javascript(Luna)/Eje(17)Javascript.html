@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eje(17)Javascript</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script type="text/javascript">
+		var sueldo;
+		var anti;
+		sueldo=prompt('Ingrese el sueldo del oprerario: '),
+		anti=prompt('Ingrese le antiguedad del operario(años): ');
+		if (sueldo<500 && anti>=10) {
+			var ns=(sueldo*0.2)+sueldo;
+			document.write('El nuevo sueldo será de: ');
+			document.write( ns );
+		}
+		else{
+			document.write('Nada pasa.');
+		}
+	</script>
+</body>
+</html>

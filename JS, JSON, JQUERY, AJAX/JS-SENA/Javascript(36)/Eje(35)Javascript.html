@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eje(35)Javascript</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+
+  var suma1=0;
+  var edad;
+  var f;
+  for(f=1;f<=5;f++)
+  {
+    edad=prompt('Edad de estudiante del turno mañana:','');
+    edad=parseInt(edad);
+    suma1=suma1+edad;
+  }  
+  var suma2=0;
+  for(f=1;f<=6;f++)
+  {
+    edad=prompt('Edad de estudiante del turno tarde:','');
+    edad=parseInt(edad);
+    suma2=suma2+edad;
+  }
+  var suma3=0;
+  for(f=1;f<=11;f++)
+  {
+    edad=prompt('Edad de estudiante del turno noche:','');
+    edad=parseInt(edad);
+    suma3=suma3+edad;
+  }
+  var promedio1=suma1/5;
+  var promedio2=suma2/6;
+  var promedio3=suma3/11;
+  document.write('Promedio de edades de alumnos del turno mañana:'+promedio1+'<br>');
+  document.write('Promedio de edades de alumnos del turno tarde:'+promedio2+'<br>');
+  document.write('Promedio de edades de alumnos del turno noche:'+promedio3+'<br>');
+  if (promedio1>promedio2 && promedio1>promedio3)
+  {
+    document.write('El turno mañana tiene un promedio mayor de edades');
+  }
+  else
+  {
+    if (promedio2>promedio3)
+    {
+      document.write('El turno tarde tiene un promedio mayor de edades');
+    }
+    else
+    {
+      document.write('El turno noche tiene un promedio mayor de edades');
+    }
+  }
+</script>
+
+</body>
+</html>

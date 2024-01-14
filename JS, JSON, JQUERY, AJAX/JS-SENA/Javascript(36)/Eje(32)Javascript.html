@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eje(32)Javascript</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+
+  var cant1=0;
+  var cant2=0;
+  var cant3=0;
+  var lado1;
+  var lado2;
+  var lado3;
+  var f;
+  for(f=1;f<=4;f++)
+  {
+    lado1=prompt('Ingrese primer lado:','');
+    lado1=parseInt(lado1);
+    lado2=prompt('Ingrese segundo lado:','');
+    lado2=parseInt(lado2);
+    lado3=prompt('Ingrese tercer lado:','');
+    lado3=parseInt(lado3);
+    if (lado1==lado2 && lado1==lado3)
+    {
+      document.write('Triángulo equilatero.<br>');
+      cant1++;
+    }
+    else
+    {
+      if (lado1==lado2 || lado1==lado3 || lado2==lado3)
+      {
+        document.write('Triángulo isósceles.<br>');
+        cant2++;
+      }
+      else
+      {
+        document.write('Triángulo escaleno.<br>');
+        cant3++;
+      }
+    }    
+  }
+  document.write('<br>');
+  document.write('Cantidad de triángulos equiláteros:'+cant1+'<br>');
+  document.write('Cantidad de triángulos isósceles:'+cant2+'<br>');
+  document.write('Cantidad de triángulos escalenos:'+cant3+'<br>');
+  if (cant1<cant2 && cant1<cant3)
+  {
+    document.write('Se ingresaron menos triángulos equiláteros');
+  }
+  else
+  {
+    if (cant2<cant3)
+    {
+      document.write('Se ingresaron menos triángulos isósceles');
+    }
+    else
+    {
+      document.write('Se ingresaron menos triángulos escalenos');
+    }
+  }
+</script>
+
+</body>
+</html>

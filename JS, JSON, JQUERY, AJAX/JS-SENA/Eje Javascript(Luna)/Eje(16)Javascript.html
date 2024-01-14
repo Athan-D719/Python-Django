@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eje(16)Javascript</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script type="text/javascript">
+		var x;
+		var y;
+		x=prompt('Ingrese x: ');
+		y=prompt('Ingrese y: ');
+
+		if (x>0 && y>0) {
+			document.write('Cuadrante 1');
+		}
+		else if (x<0 && y>1) {
+			document.write('Cuadrante 2');
+		}
+		else if (x<0 && y<0) {
+			document.write('Cuadrante 3');
+		}
+		else if (x>0 && y<0) {
+			document.write('Cuadrante 4');
+		}
+		else{
+			document.write('Centro');
+		}
+	</script>
+</body>
+</html>

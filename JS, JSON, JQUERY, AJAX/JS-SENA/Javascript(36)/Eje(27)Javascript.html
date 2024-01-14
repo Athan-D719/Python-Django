@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eje(27)Javascript</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+  var documento;
+  var edad;
+  var totalpersonas=0;
+  var cantvarones=0;
+  var cantmujeres=0;
+  var cantvaronesgrandes=0;
+  do {
+    documento=prompt('Ingrese nro de documento:','');
+    documento=parseInt(documento);
+    if (documento>0)
+    {
+      edad=prompt('Ingrese la edad:','');
+      edad=parseInt(edad);
+      sexo=prompt('Ingrese el sexo (masculino/femenino):','');
+      if (sexo=='masculino')
+      { 
+        cantvarones=cantvarones+1;
+        if (edad>=16 && edad<=65)
+        {
+          cantvaronesgrandes=cantvaronesgrandes+1;
+        }
+      } 
+      if (sexo=='femenino')
+      { 
+        cantmujeres=cantmujeres+1;
+      } 
+      totalpersonas=totalpersonas+1;
+    }
+  }while(documento!=0);
+  document.write('Total de personas censadas: '+totalpersonas+'<br>');
+  document.write('Cantidad de varones: '+cantvarones+'<br>'); 
+  document.write('Cantidad de mujeres: '+cantmujeres+'<br>');   
+  document.write('Cantidad de varones entre 16 y 65 años: '+cantvaronesgrandes+'<br>');  
+</script>
+
+</body>
+</html>

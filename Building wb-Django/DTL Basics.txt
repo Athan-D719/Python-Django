@@ -1,0 +1,89 @@
+DTL:
+The template system is meant to express presentation, not program logic. It's not just a Python enbedded into HTML.
+------------------------------------------------------
+{% extends "base_generic.html" %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ section.title }}</h1>
+
+{% for story in story_list %}
+<h2>
+  <a href="{{ story.get_absolute_url }}">
+    {{ story.headline|upper }}
+  </a>
+</h2>
+<p>{{ story.tease|truncatewords:"100" }}</p>
+{% endfor %}
+{% endblock %}
+--------------------------------------------------------
+Variables: {{ variables }}
+When the template engine encounters a vatiable, it evaluates that variable and replaces it with the result.
++dictionay.items
++foo.bar
+ class Task(models.Model):
+    def foo(self):
+        return "bar"
++selection.title
+--------------------------------------------------------
+Filters: {{name|lower}}
+A filter variable can have more filters.
++ |lower = text to lower case
++ |truncatewords:30 = displays the first V 30 words
++ |join:", " = joins the V list with comas
++ |default:"nothing" = for an empty or False V, defaults
++ |lenght: returns the lenght of a list or a string
++ |filesizeformat: returns "human-readable" FZ=13KB
+--------------------------------------------------------
+Tags: {% tag %}
+Work like functions, much more complex than variables
+#
+<ul>
+{% for athlete in athlete_list %}
+    <li>{{ athlete.name }}</li>
+{% endfor %}
+</ul>
+#
+{% if athlete_list %}
+    Number of athletes: {{ athlete_list|length }}
+{% elif athlete_in_locker_room_list %}
+    Athletes should be out of the locker room soon!
+{% else %}
+    No athletes.
+{% endif %}
+#
+-------------------------------------------------------
+Comments:
+{# {% if foo %}bar{% else %} #}
+--------------------------------------------------------
+Template Inheritance: HELPIES_B.txt
+#{% extends "base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+{% block content %}
+{% for entry in blog_entries %}
+    <h2>{{ entry.title }}</h2>
+    <p>{{ entry.body }}</p>
+{% endfor %}
+{% endblock %}
+--------------------------------------------------------
+Escaping:
+This will be escaped: {{ data }}
+This will not be escaped: {{ data|safe }}
+
+#FOR BLOCKS
+
+{% autoescape off %}
+    Hello {{ name }}
+{% endautoescape %}
+--------------------------------------------------------
+BUILTINS:
++firstof: {% firstof var1 var2 var3 %}
+	:
++filter:
+	{% filter force_escape|lower %}
+    		This text will be HTML-escaped, and will 		appear 	in all lowercase.
+	{% endfilter %}
+--------------------------------------------------------

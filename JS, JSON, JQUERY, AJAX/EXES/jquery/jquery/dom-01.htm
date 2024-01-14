@@ -1,0 +1,16 @@
+<html><head><meta charset="utf-8"/></head><body>
+<p>dom-01.htm</p>
+<p>
+Hello <b><span id="person">Chuck</span></b> there.
+</p> 
+<script type="text/javascript">
+console.dir(document.getElementById('person')); //it will appear in the 
+//console the object with the attributes and tags....etc
+st = document.getElementById('person').innerHTML; //innerHTML refers to
+//the texxt in this case Chuck
+console.log("Span tag = "+st);
+
+alert('Hi there ' + st); // Pause for a bit
+document.getElementById('person').innerHTML = 'Joseph';
+</script>
+</body></html>

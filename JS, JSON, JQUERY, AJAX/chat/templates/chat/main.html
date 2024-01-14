@@ -1,0 +1,20 @@
+{% extends 'base_bootstrap.html' %}
+{% block content %}
+<p>Howdy - Lets get some JSON</p>
+<p id="back">This text will be replaced in 2 seconds</p>
+<p>
+<a href="{% url 'chat:syntax' %}" target="_new">JSON and JavaScript</a> |
+<a href="{% url 'chat:jsonfun' %}" target="_blank">JSON Endpoint</a>  |<!-- Json Console -->
+<a href="{% url 'chat:talk' %}" target="_blank">Lets Chat</a>
+</p>
+<script type="text/javascript">
+$(document).ready( function () { //JQuerty with the library included
+    $.getJSON('{% url 'chat:jsonfun' %}', function(data) { //'/chat/jsonfun',...
+    //function(data); data=Json data(dictionary)
+      $("#back").html(data.first); //JS .innerHTML(...), data.first(dictionary)
+      console.log(data);
+    })
+});
+</script>
+{% endblock %}
+</body>

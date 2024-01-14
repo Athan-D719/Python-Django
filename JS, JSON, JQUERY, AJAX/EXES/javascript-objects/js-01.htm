@@ -1,0 +1,21 @@
+<html><head><meta charset="utf-8"/></head><body>
+<p>js-01.htm</p>
+<p>Please look at the source and developer console.</p>
+<script type="text/javascript">
+function PartyAnimal() { //Template for making the party animal
+    this.x = 0; //Each PartyAnimal object has a bit of data
+    //similar to a python class instance v but uses 'this' to specify
+    this.party = function () {
+        this.x = this.x + 1;
+        console.log("So far "+this.x); 
+        //Each PartyAnimal object has a bit of code
+    }
+}
+an = new PartyAnimal(); //Create a PartyAnimal Object
+an.party(); //Tell the object to run the party() function-code
+an.party(); //party()-method
+an.party();
+</script>
+
+<script type="text/javascript" src="showsource.js"></script>
+</body></html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eje(36)Javascript</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+
+  function cargar5Valores()
+  {
+    var suma=0;
+    var valor;  
+    var f;
+    for(f=1;f<=5;f++)
+    {
+      valor=prompt('Ingrese valor:','');
+      valor=parseInt(valor);
+      suma=suma+valor;
+    }
+    return suma;
+  }
+
+  var s=cargar5Valores();
+  document.write('La suma de los 5 valores es: '+ s);  
+</script>
+
+</body>
+</html>

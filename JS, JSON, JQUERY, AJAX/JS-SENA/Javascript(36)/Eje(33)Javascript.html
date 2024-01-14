@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eje(33)Javascript</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+
+
+  var cuad1=0;
+  var cuad2=0;
+  var cuad3=0;
+  var cuad4=0;
+  var x;
+  var y;
+  var f;
+  var cant;
+  cant=prompt('Cuantos puntos procesará:','');
+  cant=parseInt(cant);
+  for(f=1;f<=cant;f++)
+  {
+    x=prompt('Ingrese coordenada x:','');
+    x=parseInt(x);
+    y=prompt('Ingrese coordenada y:','');
+    y=parseInt(y);
+    if (x>0 && y>0)
+    {
+      cuad1++;
+    }
+    else
+    {
+      if (x<0 && y>0)
+      {
+        cuad2++;
+      }
+      else
+      {
+        if (x<0 && y<0)
+        {
+          cuad3++;
+        }
+        else
+        {
+          if (x>0 && y<0)
+          {
+            cuad4++;
+          }
+        }
+      }
+    }
+  }
+  document.write('Cantidad de puntos ingresados en el primer cuadrante:'+cuad1+'<br>');
+  document.write('Cantidad de puntos ingresados en el segundo cuadrante:'+cuad2+'<br>');
+  document.write('Cantidad de puntos ingresados en el tercer cuadrante:'+cuad3+'<br>');
+  document.write('Cantidad de puntos ingresados en el cuarto cuadrante:'+cuad4+'<br>');
+</script>
+
+</body>
+</html>

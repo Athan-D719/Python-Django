@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eje(25)Javascript</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<script>
+  var total1=0;
+  var x=0;
+  var nro;
+  while(x<3)
+  {
+    nro=prompt('Ingrese valor de la primer lista:','');
+    nro=parseInt(nro);
+    total1=total1+nro;
+    x=x+1;
+  }
+  var total2=0;
+  x=0;
+  while(x<3)
+  {
+    nro=prompt('Ingrese valor de la segunda lista:','');
+    nro=parseInt(nro);
+    total2=total2+nro;
+    x=x+1;
+  }
+  if (total1>total1)
+  {
+    document.write('Tiene mayor valor la lista1');
+  }
+  else
+  {
+    if (total1<total2)
+    {
+      document.write('Tiene mayor valor la lista2');
+    }
+    else
+    {
+      document.write('Tienen el mismo valor acumulado las dos listas');
+    }
+  }
+</script>
+
+</body>
+</html>

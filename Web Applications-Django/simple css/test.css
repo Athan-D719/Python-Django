@@ -1,0 +1,50 @@
+body{
+    background-size: 100% 100%;
+    background-image: url(bh.png);
+    background-size: cover;
+	/*align-items: center;*/
+
+
+}
+h1{
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    text-align: center;
+}
+p{  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+.one{
+    flex: 2; 
+}
+.two{
+    flex: 1; 
+}
+.three{
+    flex: 1; 
+}
+.space{
+    flex: 0.1; 
+}    
+.box {
+    display: flex;
+    justify-content: center;
+  }
+
+.tania{
+width: 50px;
+height: 50px;
+
+}
+.image{
+    padding: 10px;
+    border:solid 5px white;
+    transition: 0.5s;
+	overflow: hidden;
+}
+.image:hover{
+	box-shadow: 0 0 20px rgb(209, 209, 209);
+    transform: scale(1.2);
+}
+

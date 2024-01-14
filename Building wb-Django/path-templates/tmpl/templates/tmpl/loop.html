@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>A loop template</title>
+</head>
+<body>
+    <p>Your guess was {{ zap }}</p>
+    <ul>
+    {% for x in fruits  %}  <!--iterating the list in the dictionary value for fruits-->>
+    <li>{{ x }}</li>
+    {% endfor %}
+    </ul>
+    {% if nuts %}
+        <p>Number of nuts: {{ nuts|length }}</p>    <!--method of DTL for knowing the lenght of an object-->>
+    {% else %}
+        <p>No nuts.</p>
+    {% endif %}
+</body>
+</html>

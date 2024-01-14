@@ -1,0 +1,30 @@
+<h1>Using the url tag</h2>
+<ul>
+    <li>
+        <a href="/route/second-view"> <!--Instead of this routing since the application could change-->
+        hard-coded</a> (not DRY)
+    </li>
+    <li>
+        {% url 'route:first-view' %}
+        (url 'route:first-view')
+    </li>
+    <li>
+        <a href="{% url 'route:second-view' %}"> <!--We woud route it fom the reference Name-->
+        url 'route:second-view'</a>
+    </li>
+    <li>
+        {% url 'gview:cats' %}
+        (url 'gview:cats') from gview/urls.py
+    </li>
+    <li>
+        {% url 'gview:cat' 42 %} <!--This way we can llook for another application without having to know whats the URL patterns are.-->
+        (url 'gview:cat' 42) from gview/urls.py
+    </li>
+    <li>
+        {% url 'nsroute:second-view' %} <!--Using the namespace on the dj4e-samples/urls.-->
+        (url 'nsroute:second-view') from dj4e-samples/urls.py
+    </li>
+</ul>
+<p>
+<a href="https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#url" target="_blank">Documentation</a>
+</p>

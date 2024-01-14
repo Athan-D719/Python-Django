@@ -1,0 +1,21 @@
+-F12==>Console
+document.getElementsByTagName("tr")[0].getElementsByTagName("td")[5]
+ ===se selecciona la celda que uni quiera escoger, RECORDAR QUE EMPIEZA DESDE 0
+                                                                        Y QUE LAS CASILLAS COMPARTIDAS CUENTAN COMO UNA SOLA, COMO (0,5).
+
+<script type="text/javascript"> ===se escribe dentro de <head>
+		function validar_palabra(){
+			var palabra="1"
+			var letra1=document.getElementsByTagName("tr")[0].getElementsByTagName("td")[4].innerHTML  ===aplicar atributo con java para validar lo 														   ingresado con el comando anteriormente aplicado
+														   seleccionando la casilla.
+		}
+</script>
+
+
+
+
+
+
+
+
+-isset: sirve para verificar si el usuario escogió una de las opciones dadas.

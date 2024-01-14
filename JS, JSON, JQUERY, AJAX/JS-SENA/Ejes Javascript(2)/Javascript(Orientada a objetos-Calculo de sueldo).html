@@ -1,0 +1,53 @@
+<!--
+Ejemplo 1: Crear un vector para almacenar los cinco sueldos de operarios y luego mostrar el total de gastos en sueldos (cada actividad en una función).
+-->
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<script type="text/javascript">
+  function cargar(sueldos)
+  {
+    var f;
+    for(f=0;f<sueldos.length;f++)
+    {
+      var v;
+      v=prompt('Ingrese sueldo:','');
+      sueldos[f]=parseInt(v); 
+    }
+  }
+
+  function calcularGastos(sueldos)
+  {
+    var total=0;
+    var f;
+    for(f=0;f<sueldos.length;f++)
+    {
+      total=total+sueldos[f];
+    }
+    document.write('Listado de sueldos<br>');
+    for(f=0;f<sueldos.length;f++)
+    {
+      document.write(sueldos[f]+'<br>');
+    } 
+    document.write('Total de gastos en sueldos:'+total); 
+  }
+
+  var sueldos; //Recordemos que el programa comienza a ejecutarse a partir de las líneas que se encuentran fuera de la funciones
+  sueldos=new Array(5);
+  cargar(sueldos);
+  calcularGastos(sueldos);
+//Lo primero, definimos una variable y posteriormente creamos un objeto de la clase Array, indicándole que queremos almacenar 5 valores.
+
+//Llamamos a la función cargar enviándole el vector. En la función, a través de un ciclo for recorremos las distintas componentes del vector y almacenamos valores enteros que ingresamos por teclado.
+
+//Para conocer el tamaño del vector accedemos a la propiedad length de la clase Array.
+
+//En la segunda función sumamos todas las componentes del vector, imprimimos en la página los valores y el total de gastos.
+
+</script>
+
+</body>
+</html>

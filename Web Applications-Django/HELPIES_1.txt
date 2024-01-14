@@ -1,0 +1,31 @@
+IETF : Internet Engineer Task Force, Internet Standar protocols creators. (1981)
+
+RFC : Request for comments.
+
+URL : Uniform R Locator
+
+"Connect to a server through a socket"
+#############################
+CSS Cascade Style Sheet 
++CHEAT SHEET
+http://www.lesliefranke.com/files/reference/csscheatsheet.html
+###########################
+CSS browser plugin (activating and deactivating)
+https://chrispederick.com/
+###########################
+
+CSS:
+em : is the height of a the character in the current font.
+
+<p style="margin-top: 5em">HEEEE</p>:
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+HEEEE
+
+
+
+HTML a tag ... target="_blank" opens in another tab
+

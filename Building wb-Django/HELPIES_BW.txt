@@ -1,0 +1,330 @@
+MVC: Model View Controller
+=request response cycle...
+=the MODEL represents the data of an application and the business rules to manipulate it, the VIEW represents what the user
+ sees, and the CONTROLLER manages the details involving communication to the model of the user.
++C : Functions, the sequence of the events happening.
++V : All to be seen, at the end of the RRC: HTML, CSS, JS...
++M : the persistent data stored
+
+4 typical web server steps:
+	+Handle Input \
+	+Store Data    \
+	+Retrieve Data  = (BROWSER.)
+	+Build HTML    /
+#############################################################################################################################
+Django Data Models:
+-SQL(Structured Query Language) - how we talk to db
+
++ORM(Object Relational Mapping) - Allow us to map tables from a db into objects(columns...).py
+	#In Django however its predictible, so its a shortcut.(ORM inside Django)
+	#from django.db import models
+
+DOING MIGATIONS:
+(projects folder)
+$ python3 manage.py makemigrations : debug migrations on the development enviroment and move them to production(making files in the process).
+
+$python3 manage.py migrate: Reading those files and changing the db.
+
+#Check with the 'sqlite db.sqlite3' if the new table migrated.
+
+#Inserting Record:
+	python3 manage.py shell #not the same as the python shell but with a bunch of django libraries.
+>>>form usermodel.models import User
+>>>u = User(name'Kristen', email='asdas@umich.edu')
+>>>u.save()
+....
+#############################################################################################################################
+MIGRATIONS:
+
++ The makemigrations command reads all the models.py files in all the applications, end 
+  creates / evolves the migration files
++ Guided by the applications listed in settings.py
++ Migrations are portable across databases
+
++ The migrate command reads all the migrations folders in the application folders and 
+  creates / evolves the tables in the database (i.e. db.sqlite3)
+#############################################################################################################################
+GIT CODE:
+15:55 ~ $ cd ~                                                                                                                                      
+15:55 ~ $ ls -l                                                                                                                                     
+total 20                                                                                                                                            
+-rwxr-xr-x  1 JhonD registered_users  232 Jul 24 13:57 README.txt                                                                                   
+drwxrwxr-x 35 JhonD registered_users 4096 Jul 24 14:21 dj4e-samples                                                                                 
+drwxrwxr-x  3 JhonD registered_users 4096 Jul 24 14:22 django_projects                                                                              
+-rw-r--r--  1 JhonD registered_users 4096 Jul 24 21:50 pitch.sqlite3                                                                                
+-rw-rw-r--  1 JhonD registered_users    0 Jul 24 21:38 sqlite3                                                                                      
+-rw-r--r--  1 JhonD registered_users 4096 Jul 24 21:41 zip.sqlite                                                                                   
+15:55 ~ $ cd dj4e-samples
+15:56 ~/dj4e-samples (master)$ git pull                                                                                                             
+Already up-to-date.                                                                                                                                 
+15:56 ~/dj4e-samples (master)$  
+
+
+
+#clear to clean screen
+
+#vi users/models.py(path)
+
+#(from the manage.py shell):
+	from users.models import User (path users/models.py, import class Users(TABLE.))
+
+#python manage.py sqlmigrate polls 0001 #(The sqlmigrate command takes migration names and returns their SQL)
+###########################################################################################################################
+URL Routing in Django:
++Views are the core of the application
+	+Django looks for incoming requests URL and users url.py to select a view
++The views.py handle any incoming data and copies it into the db through the model
+ +Produces an HTML Response and returns it to the browser.
+
+READING THE URL: parsing the url
+https://samples...com/djangoapplication-folder/view within application/URL path parameter OR Kwy/value parameter(GET)
+###########################################################################################################################
+VIEWING THE VIEWS:
+
+CROSS-SITE-SCRIPTING(XSS):
+	x Someone is trying to run code so that they can read stuff from your site
+	  and hand it to a rogue site. (the danger fun in views.)
+	x protecting against this.
+	x not letting it dencrypt the requests so to place the object as an HTML.
+	x THE escape(request.GET['guess']).
+	
+	def game(request) : #The safer version since it will not take the cahracters as an HTML decoded, but the string itself.
+    		response = """<html><body>
+		    <p>Your guess was """+escape(request.GET['guess'])+"""</p>     ##escape converst them into HTML entities.
+		    </body></html>"""
+		return HttpResponse(response)
+##############################################################################################################################
+HTTP STATUS CODE:
++200 "you asked for a page, i gave you a page"
++404 "you asked for a paged and i didnt find it"
++302: "Didnt make a mistake, but you are in the wrong place" REDIRECTION.
+##############################################################################################################################
+TEMPLATES TO ORGANIZE HTML
+.//dj4e-samples/tree/master/tmpl
+
++TEMPLATE-RENDER PROCESS:                             "Context"                  "Template"
+	Render Data		Template   |	{'dat' : 'Fun Stuff'}		<h1>Hi!</h1>
+	      \			   /       |          \                         <pre>
+		       Render              |	       \ 			{{dat}}
+		       Engine              |		\			</pre>
+			 |                 |		 \                        /
+		   Render Output           |              R E N D E R  E N G I N E
+					   |			      |
+				           |		         <h1>Hi!</h1>
+					   |		         <pre>
+					   |		         Fun Stuff
+					   |		         </pre>
+############################################################################################################################
+for putting python conditionals on a template:
+
+<p>{{variable}}</p>
+{% if variable < 42 %}
+	<p>Text</p>
+-------------------------------------------------------------
+for having a parameter slashed after the html : game/200
+
+path('game/<slug:guess>', views.GameView.as_view())   #url.py
+---------------------------------------------------------------
+Render Routine:
+
+from django.shortcuts import render #Python Render Engine
+from django.views import View
+
+# Create your views here.
+
+def simple(request):
+    return render(request, 'tmpl/simple.html')
+
+def guess(request) : #dictionary to be passed to the respective .html redirection.
+    context = {'zap' : '42' }
+    return render(request, 'tmpl/guess.html', context)
+---------------------------------------------------------------
+#############################################################################################################################
+TEMPLATES IN FOLDERS:
++It is common to use the "name" of a template in several applications
++Using the technique called "namespace" so that each application can load its own tamplates
+-	dj4e-samples$ ls *templates/*/details.html
+-	favs/templates/favs/details.html      #favs=namespace
+-	favsql/templates/favsql/details.html
+-	forums/templates/forums/details.html
+-	pics/templates/pics/details.html
+-	dj4e-samples$
+#############################################################################################################################
+DJANGO TEMPLATE LANGUAGE(DTL): #we are using the default one.
+#Everyting IN the curly-braces is automatically 'escape()'
+
++Substitution:	{{zap}}
+		{{zap|safe}} #filter or modifier that lets the zap as it is even if it is HTML
+
++Calling Code	{{% url 'cat-detail' cat.id %}} #find a URL for the view/cat-detail and take the pk number of the cat
+		{{% author.get_absolute_url %}}	#model_item.method.
+
++Logic		{{% if zap >100 %}}	#Start of the condition
+			<p>Too low</p>
+		{{% endif %}}		#End of the condition
+
++Blocks		{{% block content %}}	#
+		{{% endblock %}}
+#another method = n=[1,2] .....{{ nuts|length }} = 2
+#another method = x = {'outer':{'inner':42}} .....{{outer.inner}} = 42
+##############################################################################################################################
+TEMPLATE INHERITANCE:
+#INHERITANCE = "Do not repeat yourself"(DRY)
+
+#There's a BASE TEMPLATE and the other templates.
+
+1)We will have a BASE HTML:
+	...
+	<body>
+		{% block content %}{% endblock %}
+	</body>
+	...
+2)And the block content in the same folder as an .html
+	{% extends "tmpl/base.html" %}
+
+	{% block content %}
+    	<p>Your guess was {{ guess }}</p>
+    	{% if guess < 42 %}
+       	 <p>Too low</p>
+    	{% elif guess > 42 %}
+    	    <p>Too high</p>
+    	{% else %}
+    	    <p>Just right</p>
+    	{% endif %}
+	{% endblock %}
+##################################################################################################################################
+URL Mapping/Reversing:
++path('second', views.SecondView.as_view(), name='second-view'),... urls.py
++<a href="{% url 'route:second-view' %}"> ... templates/app_Name/main.py
+
++u = reverse('gview:cats') the revers utility gives us the reverse route from a given name = /gview/cats
+#################################################################################################################################
+DJANGO GENERIC VIEWS:
++MAKING A CRUD UI = Create, Retrieve, Update, Delete, User Interface:
+
++Convention for naming a List or a Detailed ()	../gview/urls.py
+
+	path('dogs', views.DogListView.as_view(), name='dogs'),
+    	path('dog/<int:pk>', views.DogDetailView.as_view(), name='dog'),
+	 
++Extractiong the object name in lower case to reuse it in a URL request later:
+	
+class DogDetailView(View):
+    model = Dog
+    def get(self, request, pk) :
+        modelname = self.model._meta.verbose_name.title().lower()
+	...
+
+--------------------------------------------------------------------------------------------------------------------------------------
+IMPORTING THE GENERIC CLASS: 
+
+from django.views import generic
+
+class HorseListView(generic.ListView):
+    model = Horse  #inherits the get function from the generic.ListView class
+        '''def get(self, request) :
+                modelname = self.model._meta.verbose_name.title().lower()
+                stuff = self.model.objects.all()
+                cntx = { modelname+'_list': stuff }
+                return render(request, 'gview/'+modelname+'_list.html', cntx)'''
+
+class HorseDetailView(generic.DetailView):
+    model = Horse #inherits the get function from the generic.DetailView class
+        '''def get(self, request, pk) :
+                modelname = self.model._meta.verbose_name.title().lower()
+                obj = self.model.objects.get(pk=pk)
+                cntx = { modelname : obj }
+                return render(request, 'gview/'+modelname+'_detail.html', cntx)
+        '''
+####################################################################################################################################
+WEEK4:
+FORMS, GET, POST, HTTP:
+FORM PROCESSING:
++ Two basic ways to talk to the server with form data:
+	+GET: parameters are placerd on the URL which is retreived.
+	+POST: URL retrived while parameters are append to the URL in the HTTP connection.
+
++USE:
+	+GET: When retreiving data
+	+POST: When creating data
+------------------------------------------------------------------------------------------------------------------------------------
+Cross-Site-Request-Forgery(CSRF) (SECURITY MEANS):
++CSRF ATTACK:
+	+A rogue site generates a page that includes form that posts data into a legitimate site
+	where the user is logged in via session cookie
+	
+	+The form is submitted and the cookie is saves
+
+	+The legitimate site accepts the request due to the cookie value.
+
+	+The rogue site doesnt need to know the cookie value since the cookie will be sent with the request.
+
++CSRF DEFFENSE:
+	+The legitimate site choose a random number(CSRF TOKEN) and puts it in the session
+	
+	+When the legitimate site generates a POST form, it includes  the CSRF TOKEN as a hidden input field
+	
+	+In the submission the session will look for that CSRF TOKEN, if it doesnt match it will reject the request.
+----------------------------------------------------------------------------------------------------------------------------------------
+To enable it in our applications:
+./settings.py
+MIDDLEWARE:
+	'django.middleware.csrf.CsrfViewMiddleware' ,  ...
+-----------------------------------------------------------------------------------------------------------------------------------------
+CSRF FORMS:
+ 	HTTP 403: Forbbiden, You are not getting this page because you are not authorized. (post-requests)
+	#When no CSRF:
+	
+	from django.views.decorators.csrf import csrf_exempt
+	
+	@csrf_exempt
+	def postform(request):
+	    response = """<p>Impossible POST guessing game...</p>
+      	    <form method="POST">
+      	    <p><label for="guess">Input Guess</label>
+      	    <input type="text" name="guess" size="40" id="guess"/></p>
+      	    <input type="submit"/>
+      	    </form>"""
+      
+            response += dumpdata('POST', request.POST)
+             return HttpResponse(response)
+
+
+from django.middleware.csrf import get_token
+
+def csrfform(request):
+    response = """<p>CSRF Success guessing game...</p>
+        <form method="POST">
+        <p><label for="guess">Input Guess</label>
+        <input type="text" name="guess" size="40" id="guess"/></p>
+        <input type="hidden" name="csrfmiddlewaretoken"
+            value="__token__"/>
+        <input type="submit"/>
+        </form>"""
+
+    token = get_token(request)
+    response = response.replace('__token__', html.escape(token))
+    response += dumpdata('POST', request.POST)
+    return HttpResponse(response)
+
+=======================================================================================================================================
+POST-REFRESH-OPS:
++When refreshing it would make the POST again
++How to not allow to REpost when REloading (POST/GET-REDIRECT-REFRESH):
+
++Separate The Notification Page and the Form page.
+############################################################################################################################################
+TIPS:
+forloop.counter indicates how many times the for tag has gone through its loop
+
+
+
+			
+
+
+
+
+
+
+
+

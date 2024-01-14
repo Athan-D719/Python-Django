@@ -1,0 +1,41 @@
+{% extends 'base_bootstrap.html' %}
+{% block content %}
+<h1>Chat</h1>
+<form method="post">
+{% csrf_token %}
+<input type="text" name="message" size="60"/>
+<input type="submit" value="Chat"/> 
+<input type="submit" name="reset" value="Reset"/> 
+<a href="{% url 'chat:main' %}" target="_blank">Cancel</a>
+</p>
+</form>
+
+<div id="chatcontent">
+<img src="{% url 'chat:static' 'spinner.gif' %}" alt="Loading..."/>
+<!--Spinner will be replaced with the messages-->
+</div>
+
+<script type="text/javascript">
+function updateMsg() {
+    console.log('Requesting JSON'); 
+    $.getJSON('{% url 'chat:messages' %}', function(rowz){ //data passed as Array of arrays
+        //[['joioij', 8 seconds ago], ['WENAS', 10 seconds ago]]
+        //rowz = array in rows.
+        console.log('JSON', rowz);
+        $('#chatcontent').empty(); //will empty the chat box including the GIF
+        for (var i = 0; i < rowz.length; i++) {
+          arow = rowz[i]; //array of json content: ['joioij', 8 seconds ago]
+          $('#chatcontent').append('<p>'+arow[0] +  //appends to the #chatcontent
+              '<br/>&nbsp;&nbsp;'+arow[1]+"</p>\n");
+        }
+        setTimeout('updateMsg()', 4000); //Wait 4000ms until doing this again.
+    });//in the backgroung JS comunicates with the refreshing Json and does it.
+}
+
+// Make sure JSON requests are not cached
+$(document).ready(function() {//under document ready...
+    $.ajaxSetup({ cache: false }); //don't cache that data since we want mote messages
+    setTimeout('updateMsg()', 2000); //two seconds for the page to refresh - GIF
+});
+</script>
+{% endblock %}

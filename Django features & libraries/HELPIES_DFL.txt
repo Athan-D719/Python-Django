@@ -1,0 +1,308 @@
+COOKIES & SESSIONS:
++Main approach of cookies is to ESTABLISH & MANTAIN SESSIONS.
+
+Multi-User/Multi-Browser:
+.The server is interacting with many different browsers.
+
+Web Cookies to the Rescue:
+.little amount of data saved as someone has logged in or made previous request to be match later.
+
+Cookies In the Browser:
+.They have an expiration date and can't be readed by another one thats not the server.
+#############################################################################################################
+SESSIONS:
+In Server-Sessions:
+.Most of the applications create a session for us
+.we set a session cookie to be stored in the browser, gives the browser a unique 'mark'
+.The creation and destruction of sessions is managed by a Django middleware that we use in our applications.
+
+Session Identifier:
+.A large, random number that we place in a browser cookie the first time we encounter a browser.
+.This number is to pick from many sessions that the server has active at any one time
+.Server software stores data in the session
+.login information is stored in the session of the server.
+
+/settings.py:
+	MIDDLEWARE = [
+    	'django.middleware.security.SecurityMiddleware',
+    	'django.contrib.sessions.middleware.SessionMiddleware', <----to be enabled.
+    	'django.middleware.common.CommonMiddleware',
+    	'django.middleware.csrf.CsrfViewMiddleware',
+    	'django.contrib.auth.middleware.AuthenticationMiddleware',
+    	'django.contrib.messages.middleware.MessageMiddleware',
+    	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	]
+$ winpty python38 manage.py migrate
+#FOR STORING SESSIONS IN THE DATABASE.
+
+
+Django Sessions:
+.The incoming REQUEST OBJECT(request) has a request.session attribute that we can treat like a dictionary
+
+.As long as we have the SESSIONS MIDLEWARE enabled and the database table, and the browser allows cookies
+we just store and read request.sessions in our views.
+
+#############################################################################################################
+DATA BASE, BASE64 ENCODING:
+/mysite
+$sqlite3 db.sqlite3
+>>.tables
+>>.mode column
+>>select * from django_session;
+>>
+9xt3rlgftfktjkbhxd92xlza9f2fh8la  MGViYThlYmU5N2M3MzljZDQ1NTU2ZjlmMGVhZjRkNGYwMjVmYTQ2MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxNjBhMjQ0ZGZjMTkzMmQ3Y2U1Zjg0OGMwNjBkYTVjYjMyNjI3Y2IzIiwibXNnIjpmYWxzZSwibnVtX3Zpc2l0cyI6Mn0=  2020-08-19 20:53:43.467739
+awkc0nnhp29xmtfoj84o7301nslzi2qi  MGY5YWVhZTFhZmM1NjkyYWUwZGFhZTk3NDAzMzAwN2I3OWJlMWJjOTp7Im51bV92aXNpdHMiOjN9                                                                                                                                                                                                                      2020-08-19 22:16:19.659224
+
+#AND ALL OF THAT TEXT CAN BE DECODED WITH THE PYTHON HELP
+
+MGY5YWVhZTFhZmM1NjkyYWUwZGFhZTk3NDAzMzAwN2I3OWJlMWJjOTp7Im51bV92aXNpdHMiOjN9 <--
+									        |
+#That one is the one to decode, code in cd ./Onedrive/django/mysite/session-----|
+#################################################################################################################################
+#################################################################################################################################
+CREATING AND MANAGING USERS IN DJANGO.
++USER AUTHENTICATION IN DJ:
+	.Django comes with a user authentication system that handles user accounts, groups, cookies..etc
+	.Users with binary permissions(yes/no)
+	.Groups as a generic way od applying permissions to various users.
+	.Forms for user logging in, or restrict content.
+.The authentication support works as a Django contrib in django.contrib.auth, by default in settings.
+
+
+.We need to "bootsrap" our system and make a user that log into admin page to make more users
+./mysite
+$winpty python38 manage.py createsuperuser #'winpty' as being this one a win distribution and follow the command instructions.
+#AS A WAY OF STARTING OVER WITH THE 'db.sqlite3'
+$rm db.sqlite3
+$python38 manage.py migrate
+$python38 manage.py createsuperuser
+...
+In the interface you would look for the /admin to read the models information and creating users.
+---------------------------------------------------------------------------------------------------------------------------------------
+SESSIONS ARE NOT "LOGGED IN":
+.Sessions are the way of storing data in the server through a browser request or multiple.
+.When the user passes the login-check, the server adds data to the session identifying the user.
+.When the user logs out will remove the session information.
+
+.Sessions are required to implement 'login'
+
+THINGS TO BE ENABLED:
+/settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    ...]
+/urls.py
+urlpatterns = [
+    path('', TemplateView.as_view(template_name='home/main.html')),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    ...]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+WHERE TO GO AFTER LOGIN/LOGOUT:
+.We would like to transfer the user to a login page, and bring them back when login out.
+.the "next=" parameter tells login or logout where to redirect the user after login.
+
+class ManualProtect(View) :
+    def get(self, request):
+        if not request.user.is_authenticated :
+            loginurl = reverse('login')+'?'+urlencode({'next': request.path})
+            return redirect(loginurl)
+        return render(request, 'authz/main.html')
+
+WE HAVE TO CREATE OUR TEMPLATE FOR "registration/login.html"
+--------------------------------------------------------------------------------------------------------------------------------------------
+FORMS IN DJANGO:
+.Takes a lot of css to make it look nice.
+.Create Form Flow: validate POST,(cancel)-Store in db-Success Page.
+.In Django the act like glue(generate HTML, Receive and validate incoming POST and produces an HTML error if neccesary, move the data to store it in a db.)
+--------------------------------------------------------------------------------------------------------------------------------------------
+DATA VALIDATOR IN FORM:
+from django import forms
+from django.core.exceptions import ValidationError
+from django.core import validators
+
+class BasicForm(forms.Form):
+    title = forms.CharField(validators=[
+        validators.MinLengthValidator(2, "Please enter 2 or more characters")])
+    ...
+
+from django.db import models
+from django.core.validators import MinLengthValidator
+validators=[MinLengthValidator(2, "Name must be greater than 1 character")]
+
+
+.When trying to submit a form the view code checks the data and doesnt save it letting the user resubmit the data correctly
+
+#####################################################################################################################################################
+DATA MODELING: ONE TO MANY
+.Model Design: comes to efficiecy of storing and receiving data
+.Data Normalization (3NF) StarUML:
+.Do not replicate data - reference data - point data
+.Add a special "unique key" column to each table which we will make reference to ("id")
+.Use integer for to make links between tables - integers are fast and small
+
+
+REMOVING REPLICATION
+.From a bunch of columns that are repeating to diferent tables derived from the big table into the different replicated columns
+.Orginized and optimized data model.
+.Make conections from one data item to another to not replicate the results, like 'en' for english books attatched to that data item
+ instead of using 'en' a number of times in a table, more like a PrimaryKey and a ForeignKey.
+################################################################################################################################# StarUML
+#################################################################################################################################
+#########################################	Legends:				#########################################
+#########################################	1	One				#########################################
+#########################################	1..*	Many with a minimum of 1	######################################### U
+#########################################	0..*	Many with a minimum of 0	######################################### M
+################################################################################################################################# L
+#########################################	MANY TO ONE(1..*/0..*)-->(1)		#########################################
+#########################################	ONE TO MANY(1)-->(1..*/0..*)		#########################################
+#################################################################################################################################
+#################################################################################################################################
+https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Models
+-------------------------------------------------------------------------------------------------------------------------------------------
+REPRESENTING LINKS IN A DB(CONNECTING ARROWS):
+.ForeingKey where the arrow starts (Choice)
+.PrimaryKey where the arrow ends (Question)
+.Tables could have both since they are going to be connected to each other
+-------------------------------------------------------------------------
+MODEL FIELD TYPES
+.AutoField		.EmailField		.PositiveSmallIntegerField
+.BigAutoField		.FileField		.SlugField
+.BigIntegerField	.FilePathField		.SmallintegerField
+.BinaryField		.FloatField		.TextField
+.BooleanField		.ImageField		.TimeField
+.CharField		.IntegerField		.URLField
+.DateField		.GenericIPAddressField	+Foreingkey
+.DateTimeField		.NullBooleanField	+ManyToManyField
+.DecimalField		.PositiveIntegerField	+OneToOneField
+.DurationField
+https://docs.djangoproject.com/en/3.0/ref/models/fields/#field-types
+@LocalKey,RemoteKey,ForeingKey,PrimaryKey,LogicalKey
+---------------------------------------------------------------------------
+.Django automatically adds the id field in the .models.py
+---------------------------------------------------------------------------
+ABOUT on_delete: (https://docs.djangoproject.com/en/3.0/ref/models/fields/#django.db.models.ForeignKey.on_delete)
+.What do we do when a row in one table points to a row in a "foreign" table via a foreign key and the "destination row" is deleted
+...........on_delete = set_null – Keep the row but set foreign key to null
+...........on_delete = cascade  - Delete the row
+##################################################################################################################################
+OWNED ROWS: "Who can edit each row?"
+.In real life when you log in you can edit or delete specific things
+.As the myarts work with crispy, pip install --upgrade django-crispy-forms
+.ALL FOREIGN_KEYS ARE INTEGER. owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+class OwnerUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    Sub-class the UpdateView to pass the request to the form and limit the
+    queryset to the requesting user.
+    """
+
+    def get_queryset(self): #overwritting the query_set
+        print('update get_queryset called')
+        """ Limit a User to only modifying their own data. """
+        qs = super(OwnerUpdateView, self).get_queryset()
+        #gets the queryset from the OwnerUV
+        return qs.filter(owner=self.request.user)
+        #whatever that primary key was must match the current logged-in user.
+        #First it requires a Login
+        #Second it filters the queryset by the user logged in to show the data to update.
+         #if not 404 since its looking for a page to update where the user is not allowd
+         #according to the queryset()
+###################################################################################################################################
+CRISPY FORMS:
+1. pip install --upgrade django-crispy-forms # in case of not havinf django X--upgrade.
+2.INSTALLED_APPS = (... 'crispy_forms', ...)
+#crispy is urban dictionary for 'awesome'
+
+@GRAVATAR google service wher you register to have a picture of reference of your email. home/template_tags/app_tags
++{% load app_tags %} <!-- see home/templatetags/app_tags.py and dj4e-samples/settings.py -->
+####################################################################################################################################
+####################################################################################################################################
+						CTRL+End = #
+####################################################################################################################################
+####################################################################################################################################
+SHELL ONE TO MANY.
+>>> from bookmany.models import Book, Author, Authored
+>>> b1=Book(title='Networking')
+>>> b1.save()
+>>> b2=Book(title='Raspberry')
+>>> b2.save()
+>>> a1=Author(name='Fontichiaro')
+>>> a1.save()
+>>> a2=Author(name='Severance')
+>>> a2.save()
+>>> Authored(book=b1,author=a2).save()
+>>> Authored(book=b2,author=a1).save()
+>>> Authored(book=b1,author=a2).save()
+>>> b1.authors.values()   #authors = through, values inside that one to many will have 'name' of Author.
+<QuerySet [{'id': 3, 'name': 'Severance'}, {'id': 3, 'name': 'Severance'}]>
+>>> b2.authors.values()
+<QuerySet [{'id': 2, 'name': 'Fontichiaro'}]>
+>>> a1.books.values() #authors = through, values inside that one to many will have 'title' of Book.
+<QuerySet [{'id': 4, 'title': 'Raspberry'}]>
+>>> a2.books.values()
+<QuerySet [{'id': 3, 'title': 'Networking'}, {'id': 3, 'title': 'Networking'}]>
+######################################################################################################################################
+Loading a .CSV into a db
+#Preloading data into our databases coming from an API or even a .csv
+folders:
+many, scripts
+//////////////////
+Install Django Extensions:
+pip38 install django-extensions
+#if it wasn't installed yet, the settings.py gotta be changed:
+
+INSTALLED_APPS = [
+    ...
+
+    # Extensions - installed with pip3 / requirements.txt
+    'django_extensions',
+    ...
+...................................................................
+$mkdir scripts
+$touch scripts/__init__.py  #indication as python is reading through this folders, this folder contains models (JUST A SIGNAL)
+$cat many/load.csv
+email,role,course
+jane@tsugi.org,I,Python
+ed@tsugi.org,L,Python
+sue@tsugi.org,L,Python
+ed@tsugi.org,I,Django
+sue@tsugi.org,L,Django
+ed@tsugi.org,I,SQL
+jane@tsugi.org,L,SQL
+
+$ python38 manage.py runscript many_load
+Using registration/login_social.html as the login template
+['jane@tsugi.org', 'I', 'Python']
+['ed@tsugi.org', 'L', 'Python']
+['sue@tsugi.org', 'L', 'Python']
+['ed@tsugi.org', 'I', 'Django']
+['sue@tsugi.org', 'L', 'Django']
+['ed@tsugi.org', 'I', 'SQL']
+['jane@tsugi.org', 'L', 'SQL']
+
+
+#shell:
+>>> from many.models import Person, Course, Membership
+>>> p = Person.objects.get(pk=1)
+>>> p.email
+'jane@tsugi.org'
+>>> x = Course.objects.get(pk=2)
+>>> x.title
+'Django'
+>>> x.members.values()
+<QuerySet [{'id': 2, 'email': 'ed@tsugi.org', 'name': None}, {'id': 3, 'email': 'sue@tsugi.org', 'name': None}]>
+>>> x.membership_set.all().values()
+<QuerySet [{'id': 4, 'person_id': 2, 'course_id': 2, 'role': 5000}, {'id': 5, 'person_id': 3, 'course_id': 2, 'role': 1}]>
+
+
+
+
+
+
+
+
+
+
